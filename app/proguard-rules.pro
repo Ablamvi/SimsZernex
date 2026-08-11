@@ -1,0 +1,2 @@
+-keep class com.simszernex.game.model.** { *; }
+-keep class com.simszernex.game.data.** { *; }
