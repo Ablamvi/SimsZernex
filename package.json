@@ -1,0 +1,24 @@
+{
+  "name": "SimsZernex",
+  "version": "1.0.0",
+  "displayName": "SimsZernex 3D - Life Simulation Game",
+  "description": "A complete 3D life simulation game engine built with Unity and C#. Features autonomous AI, dynamic relationships, career system, and procedural generation.",
+  "unity": "2022.3",
+  "unityRelease": "2022.3.0f1",
+  "dependencies": {},
+  "keywords": [
+    "simulation",
+    "ai",
+    "life-game",
+    "3d",
+    "procedural-generation",
+    "sims"
+  ],
+  "author": {
+    "name": "Copilot",
+    "email": "support@simszernex.dev",
+    "url": "https://github.com/Ablamvi/SimsZernex"
+  },
+  "type": "project",
+  "hideInEditor": false
+}
