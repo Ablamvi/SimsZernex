@@ -3,6 +3,7 @@ package com.simszernex.game.ui.screens
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -86,12 +87,21 @@ fun GameScreen(
             )
         },
         bottomBar = {
-            NavigationBar {
-                NavItem(0, state.selectedTab, onChangeTab, Icons.Default.Home, "Vie")
-                NavItem(1, state.selectedTab, onChangeTab, Icons.Default.Public, "Monde")
-                NavItem(2, state.selectedTab, onChangeTab, Icons.Default.People, "Sims")
-                NavItem(3, state.selectedTab, onChangeTab, Icons.Default.AutoAwesome, "Pouvoirs")
-                NavItem(4, state.selectedTab, onChangeTab, Icons.Default.Inventory2, "Profil")
+            // Use a simple, stable bottom bar implementation to avoid API compatibility issues
+            Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = 3.dp) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp, horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BottomBarItem(0, state.selectedTab, onChangeTab, Icons.Default.Home, "Vie")
+                    BottomBarItem(1, state.selectedTab, onChangeTab, Icons.Default.Public, "Monde")
+                    BottomBarItem(2, state.selectedTab, onChangeTab, Icons.Default.People, "Sims")
+                    BottomBarItem(3, state.selectedTab, onChangeTab, Icons.Default.AutoAwesome, "Pouvoirs")
+                    BottomBarItem(4, state.selectedTab, onChangeTab, Icons.Default.Inventory2, "Profil")
+                }
             }
         }
     ) { padding ->
@@ -111,8 +121,17 @@ fun GameScreen(
 }
 
 @Composable
-private fun NavItem(index: Int, selected: Int, onChange: (Int) -> Unit, icon: androidx.compose.ui.graphics.vector.ImageVector, label: String) {
-    NavigationBarItem(selected = selected == index, onClick = { onChange(index) }, icon = { Icon(icon, null) }, label = { Text(label) })
+private fun BottomBarItem(index: Int, selected: Int, onChange: (Int) -> Unit, icon: androidx.compose.ui.graphics.vector.ImageVector, label: String) {
+    val isSelected = selected == index
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .clickable { onChange(index) }
+            .padding(6.dp)
+    ) {
+        Icon(icon, contentDescription = label, tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+    }
 }
 
 @Composable
@@ -468,7 +487,7 @@ private fun SimAvatar(name: String, size: Int) {
 private fun NeedBar(label: String, value: Float) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 2.dp)) {
         Text(label, Modifier.width(62.dp), style = MaterialTheme.typography.labelSmall)
-        LinearProgressIndicator(progress = { value.coerceIn(0f, 100f) / 100f }, modifier = Modifier.weight(1f).height(7.dp).clip(RoundedCornerShape(4.dp)))
+        LinearProgressIndicator(progress = value.coerceIn(0f, 100f) / 100f, modifier = Modifier.weight(1f).height(7.dp).clip(RoundedCornerShape(4.dp)))
         Text("${value.toInt()}", Modifier.width(30.dp), textAlign = TextAlign.End, style = MaterialTheme.typography.labelSmall)
     }
 }
