@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MaisonVie 3D</string>
+    <string name="action_sleep">Dormir</string>
+    <string name="action_eat">Manger</string>
+    <string name="action_shower">Se doucher</string>
+    <string name="need_hunger">Faim</string>
+    <string name="need_energy">Énergie</string>
+    <string name="need_hygiene">Hygiène</string>
+</resources>
